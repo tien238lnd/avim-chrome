@@ -1,6 +1,6 @@
 {
   "name": "__MSG_extName__",
-  "version": "0.8.5",
+  "version": "1.0.0",
   "manifest_version": 2,
   "description": "__MSG_extDescription__",
   "icons": { "16": "icons/icon16.png",
@@ -9,8 +9,7 @@
   },
   "browser_action": {
     "default_icon": "icons/icon19.png",
-    "default_title": "__MSG_extAction__",
-    "default_popup": "popup.html"
+    "default_title": "__MSG_extAction__"
   },
   "content_scripts": [{
   	"js": [ "scripts/avim.js", "scripts/extension.js" ],
@@ -21,6 +20,9 @@
   "default_locale": "en",
   "offline_enabled": true,
   "background": {
-    "scripts": ["chrome/background.js"]
-  }
+    "scripts": ["tension.js"]
+  },
+  "permissions": [
+    "tabs"
+  ]
 }

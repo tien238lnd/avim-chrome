@@ -161,6 +161,7 @@ function AVIMAJAXFix() {
 }
 
 function removeOldAVIM() {
+	console.log('removeOldAVIM()');
 	// Untrigger event
 	removeEvt(document, "mouseup", AVIMAJAXFix, false);
 	removeEvt(document, "keydown", keyDownHandler, true);
@@ -174,6 +175,7 @@ function removeOldAVIM() {
 }
 
 function newAVIMInit() {
+	console.log('newAVIMInit()');
 	if (typeof AVIMObj != "undefined" && AVIMObj) {
 		removeOldAVIM();
 	}
@@ -190,6 +192,7 @@ function newAVIMInit() {
 }
 
 function configAVIM(data) {
+	console.log('configAVIM(data): ', data);
 	if (data) {
 		method = data.method;
 		onOff = data.onOff;
@@ -200,9 +203,11 @@ function configAVIM(data) {
 	newAVIMInit();
 }
 
+console.log('sendRequest get_prefs')
 sendRequest({'get_prefs':'all'}, configAVIM);
 
 extension.onMessage.addListener(function(request, sender, sendResponse){
+	console.log('listener: ', request, sender, sendResponse);
 	configAVIM(request);
 });
 

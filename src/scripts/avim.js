@@ -26,17 +26,17 @@
 
 var AVIMObj = '';
 
-var method = 0, //Default input method: 0=AUTO, 1=TELEX, 2=VNI, 3=VIQR, 4=VIQR*
-	  onOff = 1, //Starting status: 0=Off, 1=On
-	  checkSpell = 1, //Spell Check: 0=Off, 1=On
-	  oldAccent = 1, //0: New way (oa`, oe`, uy`), 1: The good old day (o`a, o`e, u`y)
-	  useCookie = 0, //Cookies: 0=Off, 1=On
-	  exclude = ["email"]; //IDs of the fields you DON'T want to let users type Vietnamese in
+var method = 1, //Default input method: 0=AUTO, 1=TELEX, 2=VNI, 3=VIQR, 4=VIQR*
+	onOff = 0, //Starting status: 0=Off, 1=On
+	checkSpell = 0, //Spell Check: 0=Off, 1=On
+	oldAccent = 1, //0: New way (oa`, oe`, uy`), 1: The good old day (o`a, o`e, u`y)
+	useCookie = 0, //Cookies: 0=Off, 1=On
+	exclude = ["email"]; //IDs of the fields you DON'T want to let users type Vietnamese in
 
 //Set to true the methods which you want to be included in the AUTO method
 var AVIMAutoConfig = [
 	true,//telex
-	true,//vni
+	false,//vni
 	false,//viqr
 	false//viqrStar
 ];

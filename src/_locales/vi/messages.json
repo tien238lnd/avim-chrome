@@ -54,5 +54,9 @@
 	"extPopupDemoCopy" : {
 		"message" : "Bôi đen toàn bộ",
 		"description" : ""
+	},
+	"extPopupEnabledList": {
+		"message" : "Danh sách bật Extension",
+		"description" : ""
 	}
 }

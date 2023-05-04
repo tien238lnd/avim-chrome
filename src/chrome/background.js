@@ -1,16 +1,18 @@
-(function(window){
+let map = {};
+
+(function (window) {
 	var localStorage = window.localStorage;
 
 	function setLocalStorageItem(key, value) {
-	  if (localStorage)
-		localStorage[key] = value;
+		if (localStorage)
+			localStorage[key] = value;
 	}
 
 	function getLocalStorageItem(key) {
-	  if (localStorage)
-		return localStorage.getItem(key);
+		if (localStorage)
+			return localStorage.getItem(key);
 
-	  return ;
+		return;
 	}
 
 	function getPrefs(callback) {
@@ -21,8 +23,14 @@
 			'method': parseInt(getLocalStorageItem('method')),
 			'onOff': parseInt(getLocalStorageItem('onOff')),
 			'ckSpell': parseInt(getLocalStorageItem('ckSpell')),
-			'oldAccent': parseInt(getLocalStorageItem('oldAccent'))
+			'oldAccent': parseInt(getLocalStorageItem('oldAccent')),
+			'enabledList': getLocalStorageItem('enabledList') || '',
 		};
+
+		var m = prefs.enabledList.split('\n');
+		for (var i = 0; i < m.length; i++) {
+			map[m[i].trim()] = true;
+		}
 
 		callback.call(this, prefs);
 	}
@@ -33,17 +41,23 @@
 		}
 
 		var onOff = getLocalStorageItem('onOff');
-		setLocalStorageItem('onOff', onOff=='1'?'0':'1');
+		setLocalStorageItem('onOff', onOff == '1' ? '0' : '1');
 
-		getPrefs(function(prefs){
+		chrome.tabs.query({ active: true }, tabs => {
+			const tab = tabs[0];
+			const hostname = new URL(tab.url).hostname;
+			map[hostname] = onOff ? '1' : '0';
+		});
+
+		getPrefs(function (prefs) {
 			updateAllTabs(prefs);
 			callback.call(this);
 		});
 	}
 
 	function updateAllTabs(prefs) {
-		chrome.tabs.query({}, function(tabs){
-			for (var i=0; i<tabs.length; i++) {
+		chrome.tabs.query({}, function (tabs) {
+			for (var i = 0; i < tabs.length; i++) {
 				var tab = tabs[i];
 				chrome.tabs.sendMessage(tab.id, prefs);
 			}
@@ -51,6 +65,29 @@
 
 		updateIcon(prefs);
 	}
+
+	function update() {
+		chrome.tabs.query({ active: true }, tabs => {
+			const tab = tabs[0];
+			const hostname = new URL(tab.url).hostname;
+
+			var onOff = map[hostname] ? '1' : '0';
+			setLocalStorageItem('onOff', onOff);
+
+			getPrefs(function (prefs) {
+				updateAllTabs(prefs);
+				callback.call(this);
+			});
+		});
+	}
+
+	chrome.tabs.onActivated.addListener(function (activeInfo) {
+		update();
+	});
+
+	chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+		update();
+	});
 
 	function updateIcon(prefs) {
 		var txt = {};
@@ -81,8 +118,11 @@
 		if (typeof request.oldAccent != 'undefined') {
 			setLocalStorageItem("oldAccent", request.oldAccent);
 		}
+		if (typeof request.enabledList != 'undefined') {
+			setLocalStorageItem("enabledList", request.enabledList);
+		}
 
-		getPrefs(function(prefs){
+		getPrefs(function (prefs) {
 			updateAllTabs(prefs);
 			callback.call(this);
 		});
@@ -110,8 +150,8 @@
 	}
 
 	function createMenus() {
-		var parentId = chrome.contextMenus.create({"title" : "AVIM", "contexts" : ["selection"]});
-		var demo = chrome.contextMenus.create({"title" : "AVIM Demo", "contexts" : ["selection"], "parentId": parentId, "onclick": genericOnClick});
+		var parentId = chrome.contextMenus.create({ "title": "AVIM", "contexts": ["selection"] });
+		var demo = chrome.contextMenus.create({ "title": "AVIM Demo", "contexts": ["selection"], "parentId": parentId, "onclick": genericOnClick });
 	}
 
 	function init() {
@@ -129,6 +169,10 @@
 
 		if (!getLocalStorageItem('oldAccent')) {
 			setLocalStorageItem('oldAccent', '1');
+		}
+
+		if (!getLocalStorageItem('enabledList')) {
+			setLocalStorageItem('enabledList', '');
 		}
 
 		getPrefs(updateIcon);

@@ -44,7 +44,7 @@
 		"description" : ""
 	},
 	"extPopupTipsCtrl" : {
-		"message" : "You can turn on/off AVIM by press Ctrl twice.",
+		"message" : "Turn on/off AVIM by press Ctrl twice.",
 		"description" : ""
 	},
 	"extPopupDemo" : {
@@ -56,7 +56,7 @@
 		"description" : ""
 	},
 	"extPopupEnabledList": {
-		"message" : "Enabled list",
+		"message" : "Sites will be default enabled:",
 		"description" : ""
 	}
 }

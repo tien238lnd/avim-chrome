@@ -56,7 +56,7 @@
 		"description" : ""
 	},
 	"extPopupEnabledList": {
-		"message" : "Danh sách bật Extension",
+		"message" : "Những site mặc định được bật extension:",
 		"description" : ""
 	}
 }

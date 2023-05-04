@@ -20,7 +20,7 @@
 	}
 
 	function loadText() {
-		var keys = ["Sel", "Telex", "Off", "Tips", "TipsCtrl", "Demo", "DemoCopy", "EnabledList"];
+		var keys = ["Sel", "Telex", "Off", "EnabledList"]; // "Tips", "TipsCtrl", "Demo", "DemoCopy",
 		for (var k in keys) {
 			$g("txt" + keys[k]).innerHTML = getI18n("extPopup" + keys[k]);
 		}
@@ -58,7 +58,7 @@
 		saveEle.addEventListener("click", function () {
 			setAVIMConfig('enabledList', enabledListEle.value);
 		});
-		$g("demoCopy").addEventListener("click", hightlightDemo);
+		// $g("demoCopy").addEventListener("click", hightlightDemo);
 	}
 
 	//	window.onload = init;

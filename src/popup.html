@@ -15,20 +15,22 @@
 		<b id="txtSel">Chọn một kiểu gõ:</b><br />
 		<input type="radio" name="method" id="telex" /> <label for="telex" id="txtTelex">Bật (TELEX)</label><br />
 		<input type="radio" name="method" id="off" /> <label for="off" id="txtOff">Tắt AVIM</label><br /><br />
-		<label for="off" id="txtEnabledList" style="font-weight: bold">Danh sách mở Extension</label><br />
-		<textarea style="width: 100%;" type="radio" name="method" id="enabledList" /></textarea>
+		Switch by press <b>Ctrl</b> twice.
+		<br />
+		<br />
+		<label for="off" id="txtEnabledList" style="font-weight: bold">Những site mặc định được bật extension:</label><br />
+		<textarea style="width: 100%; height:100px;" type="radio" name="method" id="enabledList" /></textarea>
 		<button id="save"><span id="txtSave">Save</span></button>
 		<br />
-		<b><small id="txtTips">Mẹo nhỏ:</small></b><br />
-		- <small id="txtTipsCtrl">Nhấn Ctrl 2 lần để bật/tắt nhanh.</small>
-		<br />
+		<!-- <b><small id="txtTips">Mẹo nhỏ:</small></b><br /> -->
+		<!-- <br />
 		<br />
 		<div>
 			<b id="txtDemo">Gõ nhanh</b><br />
 			<textarea id="inputDemo" style="width:100%; height:200px;" autofocus="autofocus"
 				placeholder="Gõ nhanh tiếng Việt tại đây"></textarea>
 			<button id="demoCopy"><span id="txtDemoCopy">Copy</span></button>
-		</div>
+		</div> -->
 	</div>
 	<script src="chrome/popup.js"></script>
 	<script src="scripts/avim.js"></script>
